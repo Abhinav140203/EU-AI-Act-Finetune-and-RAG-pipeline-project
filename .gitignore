@@ -1,0 +1,118 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Machine Learning Models
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.hdf5
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+
+# Large model files and datasets
+tinyllama-euai-finetuned/
+*.zip
+*.tar.gz
+*.tar.bz2
+*.7z
+
+# FAISS indexes (can be regenerated)
+embeddings/faiss_index/
+
+# Logs
+logs/
+*.log
+tensorboard_logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Data files (if they contain sensitive information)
+data/*.json
+data/*.csv
+data/*.txt
+
+# API keys and secrets
+secrets.json
+config.json
+credentials.json
+
+# Streamlit
+.streamlit/
+
+# Hugging Face cache
+.cache/
+transformers_cache/
+
+# PyTorch
+*.pth
+*.pt
+
+# TensorFlow
+*.pb
+*.ckpt
+
+# Model outputs
+outputs/
+checkpoints/
+runs/ 
