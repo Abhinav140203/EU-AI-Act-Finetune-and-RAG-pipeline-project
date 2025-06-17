@@ -26,8 +26,11 @@ This application provides an interactive interface for users to ask questions ab
 - Python 3.8 or higher
 - CUDA-compatible GPU (optional, for faster local inference)
 - Groq API key (for cloud model)
+- Docker and Docker Compose (for containerized deployment)
 
 ## 🛠️ Installation
+
+### Option 1: Local Installation
 
 1. **Clone the repository**
    ```bash
@@ -51,12 +54,55 @@ This application provides an interactive interface for users to ask questions ab
    - Verify the `embeddings/faiss_index/` directory contains the FAISS vector database
    - Check that `data/` directory contains the processed documents
 
+### Option 2: Docker Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd EU_Project
+   ```
+
+2. **Set up environment variables**
+   Create a `.env` file in the project root:
+   ```bash
+   GROQ_API_KEY=your_groq_api_key_here
+   ```
+
+3. **Build and run with Docker Compose**
+   ```bash
+   docker-compose up --build
+   ```
+
+   Or run in detached mode:
+   ```bash
+   docker-compose up -d --build
+   ```
+
+4. **Access the application**
+   Open your browser and go to `http://localhost:8501`
+
 ## 🎮 Usage
 
 ### Running the Application
 
+#### Local Installation
 ```bash
 streamlit run app.py
+```
+
+#### Docker Installation
+```bash
+# Start the application
+docker-compose up
+
+# Stop the application
+docker-compose down
+
+# View logs
+docker-compose logs -f
+
+# Rebuild and restart
+docker-compose up --build
 ```
 
 The application will open in your browser at `http://localhost:8501`.
@@ -84,6 +130,9 @@ EU_Project/
 ├── app.py                          # Main Streamlit application
 ├── requirements.txt                # Python dependencies
 ├── README.md                      # This file
+├── Dockerfile                     # Docker configuration
+├── docker-compose.yml             # Docker Compose configuration
+├── .dockerignore                  # Docker ignore file
 ├── .env                           # Environment variables
 ├── data/                          # Processed documents and datasets
 ├── embeddings/                    # FAISS vector database
@@ -121,11 +170,44 @@ python scripts/fine_tune_local.py
 python scripts/run_rag_pipeline.py
 ```
 
+## 🐳 Docker Commands
+
+### Build the image
+```bash
+docker build -t eu-ai-act-qa .
+```
+
+### Run the container
+```bash
+docker run -p 8501:8501 --env-file .env eu-ai-act-qa
+```
+
+### Run with volumes for data persistence
+```bash
+docker run -p 8501:8501 \
+  -v $(pwd)/data:/app/data \
+  -v $(pwd)/embeddings:/app/embeddings \
+  -v $(pwd)/tinyllama-euai-finetuned:/app/tinyllama-euai-finetuned \
+  --env-file .env \
+  eu-ai-act-qa
+```
+
+### View container logs
+```bash
+docker-compose logs -f eu-ai-act-qa
+```
+
+### Stop and remove containers
+```bash
+docker-compose down
+```
+
 ## 🔒 Privacy and Security
 
 - **Local Processing**: The TinyLLaMA model runs entirely on your local machine
 - **No Data Transmission**: Local model queries don't send data to external servers
 - **Environment Variables**: API keys are stored securely in `.env` file
+- **Container Isolation**: Docker provides additional security isolation
 
 ## 🤝 Contributing
 

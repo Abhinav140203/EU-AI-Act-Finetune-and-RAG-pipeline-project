@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  eu-ai-act-qa:
+    build: .
+    container_name: eu-ai-act-qa-app
+    ports:
+      - "8501:8501"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - PYTHONPATH=/app
+    volumes:
+      # Mount data directories for persistence
+      - ./data:/app/data
+      - ./embeddings:/app/embeddings
+      - ./tinyllama-euai-finetuned:/app/tinyllama-euai-finetuned
+      # Mount logs directory
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
+
+networks:
+  default:
+    name: eu-ai-act-network 

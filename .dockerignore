@@ -1,0 +1,87 @@
+# Git
+.git
+.gitignore
+README.md
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Logs
+logs/
+*.log
+tensorboard_logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Large files (will be mounted as volumes)
+tinyllama-euai-finetuned/
+embeddings/faiss_index/
+*.zip
+*.tar.gz
+*.tar.bz2
+*.7z
+
+# Cache directories
+.cache/
+transformers_cache/
+.streamlit/
+
+# Documentation
+*.md
+docs/ 
