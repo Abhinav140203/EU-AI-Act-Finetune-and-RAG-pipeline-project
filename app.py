@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.prompts import PromptTemplate
-from langchain.chains import RetrievalQA
+from langchain.chains.retrieval_qa.base import RetrievalQA
 
 from langchain_groq import ChatGroq
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
