@@ -12,6 +12,7 @@ This application provides an interactive interface for users to ask questions ab
   - Fine-tuned TinyLLaMA (local, privacy-focused)
 - **FAISS Vector Database**: For efficient similarity search
 - **Streamlit UI**: User-friendly web interface
+- **Docker Support**: Containerized deployment with health checks
 
 ## 🚀 Features
 
@@ -20,10 +21,12 @@ This application provides an interactive interface for users to ask questions ab
 - **Model Selection**: Choose between cloud and local models
 - **Real-time Processing**: Get instant answers with context retrieval
 - **Privacy Options**: Use local TinyLLaMA model for sensitive queries
+- **Docker Deployment**: Easy containerized setup with volume persistence
+- **Health Monitoring**: Built-in health checks for production deployment
 
 ## 📋 Prerequisites
 
-- Python 3.8 or higher
+- Python 3.11 or higher
 - CUDA-compatible GPU (optional, for faster local inference)
 - Groq API key (for cloud model)
 - Docker and Docker Compose (for containerized deployment)
@@ -35,7 +38,7 @@ This application provides an interactive interface for users to ask questions ab
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd EU_Project
+   cd EU-AI-Act-Finetune-and-RAG-pipeline-project
    ```
 
 2. **Install dependencies**
@@ -52,14 +55,14 @@ This application provides an interactive interface for users to ask questions ab
 4. **Download required models and data**
    - Ensure the `tinyllama-euai-finetuned/` directory contains the fine-tuned model
    - Verify the `embeddings/faiss_index/` directory contains the FAISS vector database
-   - Check that `data/` directory contains the processed documents
+   - Check that `data/pdfs/` directory contains the EU AI Act PDF documents
 
 ### Option 2: Docker Installation
 
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd EU_Project
+   cd EU-AI-Act-Finetune-and-RAG-pipeline-project
    ```
 
 2. **Set up environment variables**
@@ -126,25 +129,30 @@ The application will open in your browser at `http://localhost:8501`.
 ## 📁 Project Structure
 
 ```
-EU_Project/
+EU-AI-Act-Finetune-and-RAG-pipeline-project/
 ├── app.py                          # Main Streamlit application
 ├── requirements.txt                # Python dependencies
 ├── README.md                      # This file
 ├── Dockerfile                     # Docker configuration
 ├── docker-compose.yml             # Docker Compose configuration
 ├── .dockerignore                  # Docker ignore file
-├── .env                           # Environment variables
-├── data/                          # Processed documents and datasets
-├── embeddings/                    # FAISS vector database
+├── .gitignore                     # Git ignore patterns
+├── .env                           # Environment variables (create this)
+├── data/                          # Data directory
+│   └── pdfs/                      # EU AI Act PDF documents
+│       ├── EU AI act1.pdf         # Primary EU AI Act document
+│       └── EU AI Act2.pdf         # Additional EU AI Act document
+├── embeddings/                    # FAISS vector database (auto-generated)
 ├── tinyllama-euai-finetuned/      # Fine-tuned TinyLLaMA model
+├── logs/                          # Application logs (auto-created)
 └── scripts/                       # Data processing and training scripts
-    ├── extract_data.py           # Extract text from documents
+    ├── extract_data.py           # Extract text from PDF documents
     ├── chunk_text.py             # Split text into chunks
     ├── embed_and_store.py        # Create embeddings and FAISS index
     ├── generate_qa_dataset.py    # Generate Q&A training data
-    ├── fine_tune_local.py        # Fine-tune TinyLLaMA model
     ├── rag_pipeline_tinyllama.py # RAG pipeline for TinyLLaMA
-    └── run_rag_pipeline.py       # Run RAG pipeline
+    ├── run_rag_pipeline.py       # Run RAG pipeline
+    └── TinyLLaMA_EUAI_FineTune (1).ipynb  # Fine-tuning notebook
 ```
 
 ## 🔧 Development
@@ -158,10 +166,9 @@ EU_Project/
 
 ### Model Training
 
-To fine-tune the TinyLLaMA model:
-
+To fine-tune the TinyLLaMA model, use the Jupyter notebook:
 ```bash
-python scripts/fine_tune_local.py
+jupyter notebook scripts/TinyLLaMA_EUAI_FineTune\ \(1\).ipynb
 ```
 
 ### Testing RAG Pipeline
@@ -188,6 +195,7 @@ docker run -p 8501:8501 \
   -v $(pwd)/data:/app/data \
   -v $(pwd)/embeddings:/app/embeddings \
   -v $(pwd)/tinyllama-euai-finetuned:/app/tinyllama-euai-finetuned \
+  -v $(pwd)/logs:/app/logs \
   --env-file .env \
   eu-ai-act-qa
 ```
@@ -202,12 +210,25 @@ docker-compose logs -f eu-ai-act-qa
 docker-compose down
 ```
 
+### Check container health
+```bash
+docker-compose ps
+```
+
 ## 🔒 Privacy and Security
 
 - **Local Processing**: The TinyLLaMA model runs entirely on your local machine
 - **No Data Transmission**: Local model queries don't send data to external servers
 - **Environment Variables**: API keys are stored securely in `.env` file
 - **Container Isolation**: Docker provides additional security isolation
+- **Volume Persistence**: Data and models persist across container restarts
+
+## 📊 Logging and Monitoring
+
+The application includes comprehensive logging:
+- **Application Logs**: Stored in `logs/` directory
+- **Health Checks**: Docker health monitoring for production deployment
+- **Error Tracking**: Detailed error logging for debugging
 
 ## 🤝 Contributing
 
